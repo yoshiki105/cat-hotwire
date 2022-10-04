@@ -2,6 +2,10 @@
 
 <h1>Cats</h1>
 
+<%# ransackが用意しているソートのリンク。クリックするとソートされる。 %>
+<%= sort_link @search, :name %>
+<%= sort_link @search, :age %>
+
 <%# ransackを使用したフォームでは、form_withの代わりにsearch_form_forを使う %>
 <%= search_form_for @search do |f| %>
   <%# カラム名_cont とすると、カラムに対してLIKEを使った曖昧一致検索ができる %>
