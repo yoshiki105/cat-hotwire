@@ -41,6 +41,7 @@ class CatsController < ApplicationController
     if @cat.update(cat_params)
       # redirectがないと暗黙的にrender実行
       # turbo_streamを利用したリクエストでは update.turbo_stream.erb を描画
+      flash.now.notice = 'ねこを更新しました'
     else
       render :edit, status: :unprocessable_entity
     end
