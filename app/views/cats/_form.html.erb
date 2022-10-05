@@ -1,12 +1,36 @@
-<%# bootstrap_formを使ったフォームでは、form_withの代わりにbootstrap_form_withを使う %>
-<%# バリデーションエラーの表示はbootstrap_formが用意してくれるので、自前で用意する必要がなくなる %>
-<%= bootstrap_form_with(model: cat) do |form| %>
-
-  <%# ラベルはbootstrap_formが用意してくれるので、自前で用意する必要がなくなる %>
-  <%# Bootstrapのclass属性もbootstrap_formが設定してくれるので、自前で用意する必要はない %>
-  <%= form.text_field :name %>
-  <%= form.number_field :age %>
-
-  <%# Bootstrapのprimary色のsubmitボタン %>
-  <%= form.primary %>
+<%# 編集リンクをクリックすると、_cat.html.erbの<turbo-frame>部分がこの部分に置換される %>
+<%= turbo_frame_tag cat do %>
+  <%# bootstrap_formを使ったフォームでは、form_withの代わりにbootstrap_form_withを使う %>
+  <%# バリデーションエラーの表示はbootstrap_formが用意してくれるので、自前で用意する必要がなくなる %>
+  <%= bootstrap_form_with(model: cat) do |form| %>
+    <div class="row py-2 border-top">
+      <div class="col-4">
+        <%# ラベルはbootstrap_formが用意してくれるので、自前で用意する必要がなくなる %>
+        <%# Bootstrapのclass属性もbootstrap_formが設定してくれるので、自前で用意する必要はない %>
+        <%# _cat.html.erbの見た目に合うように、フォームの見た目を修正 %>
+        <%# オプションはbootstrap_formのもの %>
+        <%= form.text_field :name,
+                            skip_label: true,           # ラベル不要
+                            label_as_placeholder: true, # ラベルをプレースホルダーとして使う
+                            wrapper: false,             # <div>ラッパーは不要
+                            control_class: 'form-control form-control-sm' # コントロールのclass属性を指定
+        %>
+      </div>
+      <div class="col-4">
+        <%= form.number_field :age,
+                              skip_label: true,
+                              label_as_placeholder: true,
+                              wrapper: false,
+                              control_class: 'form-control form-control-sm'
+        %>
+      </div>
+      <div class="col-4">
+        <div class="d-flex justify-content-end">
+          <%# Bootstrapのprimary色のsubmitボタン %>
+          <%= form.primary class: 'btn btn-primary btn-sm me-2' %>
+          <%= link_to 'キャンセル', cat, class: 'btn btn-sm btn-outline-secondary' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
 <% end %>
